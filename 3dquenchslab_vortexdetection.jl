@@ -1,7 +1,7 @@
 # sol[t][x; y; z] where t ranges from 0 -> 200 and [x; y; z] is a 128x128x32 array in k space. First pick a time slice to examine using sol[t],
 # then convert to position space using xspace(psi, sim)
 using VortexDistributions, FourierGPE, FGPEexamples, Plots
-
+#Changing something
 #Params
 Nx = 128; Ny = Nx;
 Nz = 32;
