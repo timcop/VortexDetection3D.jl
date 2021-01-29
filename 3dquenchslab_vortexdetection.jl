@@ -7,7 +7,7 @@ Nx = 128; Ny = Nx;
 Nz = 32;
 Lx = 200; Ly = Lx;
 Lz = 50;
-x = LinRange(-Lx / 2, Ly / 2, Nx); y = x;
+x = LinRange(-Lx / 2, Lx / 2, Nx); y = x;
 z = LinRange(-Lz/2, Lz/2, Nz);
 
 psi_3d = sol[199];
