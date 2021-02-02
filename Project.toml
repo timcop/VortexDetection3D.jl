@@ -1,5 +1,6 @@
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CoupledFields = "7ad07ef1-bdf2-5661-9d2b-286fd4296dac"
 FGPEexamples = "6c09c9bc-5f11-11e9-20cd-4713a023ac65"
 FourierGPE = "f013a474-557c-11e9-3596-438edcad9d97"
 Interact = "c601a237-2ae4-5e1e-952c-7a85b0c7eef1"

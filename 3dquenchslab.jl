@@ -39,4 +39,7 @@ function dense(phi)
 end
 
 
-@time find_vortices3D(sol, 100)
+#@time find_vortices3D(sol, 100)
+gradpsi = gradient_3D(sol, 100)
+
+wps = wps_norm(gradpsi, 10,10,10)
