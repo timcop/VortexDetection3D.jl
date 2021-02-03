@@ -12,7 +12,7 @@ sim = Sim(L,N)
 γ = 0.05
 μ = 25.0
 tf = 2.5/γ
-Nt = 200
+Nt = 100
 t = LinRange(0.,tf,Nt)
 
 # potential
@@ -38,6 +38,22 @@ function dense(phi)
     return density/pmax
 end
 
+
+psi = xspace(sol[100], sim)
+find_vortices3D(psi, X)
+vort_arr_mid = vortex_array(findvortices(Torus(psi[:, :, 16], x, y)))
+vort_arr_up = vortex_array(findvortices(Torus(psi[:, :, 17], x, y)))
+grad = gradient_3D(psi, X)
+
+myvort = vort_arr_mid[2,1:2]
+xin = find_nearest(myvort[1], x)[2]; yin = find_nearest(myvort[2], y)[2];
+using LinearAlgebra
+wps = wps_v(grad, [Int(xin), Int(yin), 16])
+wps = wps ./ wps[3]
+newvort = myvort + wps[1:2]
+newvort
+
+#=
 psi = xspace(sol(100), sim);
 
 grad = gradient_3D(psi, X)
@@ -55,3 +71,4 @@ wps_arr = abs.(wps_arr);
 wps_arr = wps_arr ./ (findmax(wps_arr)[1])
 heatmap(x, y, wps_arr)
 scatter!(v_array[:, 2], v_array[:, 1])
+=#
