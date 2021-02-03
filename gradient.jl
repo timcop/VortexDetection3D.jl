@@ -1,42 +1,77 @@
 #########################################################
-function gradient_3D(sol, tslice)
     psi = xspace(sol(tslice), sim)
-    psi_real = real(psi)
-    psi_imag = imag(psi)
+    # then use psi = myarr for gradient_3D
+function gradient_2D(arr, X)
+    arr_real = real(arr)
+    arr_imag = imag(arr)
+    x = X[1]; y = X[2];
+    dx = x[2] - x[1];
+    dy = y[2] - y[1];
+    dxarr_real = similar(arr_real);
+    dyarr_real = similar(arr_real); 
+    dxarr_imag = similar(arr_imag);
+    dyarr_imag = similar(arr_imag);
 
+    for xin in 2:length(x)
+        dxarr_real[xin, :] .= (arr_real[xin, :] .- arr_real[xin-1, :]) ./ dx;
+        dxarr_imag[xin, :] .= (arr_imag[xin, :] .- arr_imag[xin-1, :]) ./ dx;
+    end
+    dxarr_real[1, :] .= 0;
+    dxarr_imag[1, :] .= 0;
+    
+    for yin in 2:length(y)
+        dyarr_real[:, yin] .= (arr_real[:, yin] .- arr_real[:, yin-1]) ./ dy;
+        dyarr_imag[:, yin] .= (arr_imag[:, yin] .- arr_imag[:, yin-1]) ./ dy;
+    end
+    dyarr_real[:, 1] .= 0;
+    dyarr_imag[:, 1] .= 0;
+    GRADarr_real = [dxarr_real, dyarr_real];
+    GRADarr_imag = [dxarr_imag, dyarr_imag];
+    grad = [GRADarr_real, GRADarr_imag];
+    return grad;
+end
+
+
+function gradient_3D(arr, X)
+
+    arr_real = real(arr)
+    arr_imag = imag(arr)
+    x = X[1]; y = X[2]; z = X[3];
     dx = x[2] - x[1];
     dy = y[2] - y[1];
     dz = z[2] - z[1];
   
-    dxpsi_real = similar(psi_real);
-    dypsi_real = dxpsi_real; dzpsi_real = dxpsi_real;
-    dxpsi_imag = similar(psi_imag);
-    dypsi_imag = dxpsi_imag; dzpsi_imag = dxpsi_imag; 
+    dxarr_real = similar(arr_real);
+    dyarr_real = similar(arr_real); 
+    dzarr_real = similar(arr_real);
+    dxarr_imag = similar(arr_imag);
+    dyarr_imag = similar(arr_imag);
+    dzarr_imag = similar(arr_imag); 
 
     for xin in 2:length(x)
-        dxpsi_real[xin, :, :] .= (psi_real[xin, :, :] .- psi_real[xin-1, :, :]) ./ dx;
-        dxpsi_imag[xin, :, :] .= (psi_imag[xin, :, :] .- psi_imag[xin-1, :, :]) ./ dx;
+        dxarr_real[xin, :, :] .= (arr_real[xin, :, :] .- arr_real[xin-1, :, :]) ./ dx;
+        dxarr_imag[xin, :, :] .= (arr_imag[xin, :, :] .- arr_imag[xin-1, :, :]) ./ dx;
     end
-    dxpsi_real[1, :, :] .= 0;
-    dxpsi_imag[1, :, :] .= 0;
+    dxarr_real[1, :, :] .= 0;
+    dxarr_imag[1, :, :] .= 0;
 
     for yin in 2:length(y)
-        dypsi_real[:, yin, :] .= (psi_real[:, yin, :] .- psi_real[:, yin-1, :]) ./ dy;
-        dypsi_imag[:, yin, :] .= (psi_imag[:, yin, :] .- psi_imag[:, yin-1, :]) ./ dy;
+        dyarr_real[:, yin, :] .= (arr_real[:, yin, :] .- arr_real[:, yin-1, :]) ./ dy;
+        dyarr_imag[:, yin, :] .= (arr_imag[:, yin, :] .- arr_imag[:, yin-1, :]) ./ dy;
     end
-    dypsi_real[:, 1, :] .= 0;
-    dypsi_imag[:, 1, :] .= 0;
+    dyarr_real[:, 1, :] .= 0;
+    dyarr_imag[:, 1, :] .= 0;
 
     for zin in 2:length(z)
-        dzpsi_real[:, :, zin] .= (psi_real[:, :, zin] .- psi_real[:, :, zin - 1]) ./ dz;
-        dzpsi_imag[:, :, zin] .= (psi_imag[:, :, zin] .- psi_imag[:, :, zin - 1]) ./ dz;
+        dzarr_real[:, :, zin] .= (arr_real[:, :, zin] .- arr_real[:, :, zin - 1]) ./ dz;
+        dzarr_imag[:, :, zin] .= (arr_imag[:, :, zin] .- arr_imag[:, :, zin - 1]) ./ dz;
     end
-    dzpsi_real[:, :, 1] .= 0;
-    dzpsi_imag[:, :, 1] .= 0;
+    dzarr_real[:, :, 1] .= 0;
+    dzarr_imag[:, :, 1] .= 0;
 
-    GRADpsi_real = [dxpsi_real, dypsi_real, dzpsi_real];
-    GRADpsi_imag = [dxpsi_imag, dypsi_imag, dzpsi_imag];
-    GRADpsi = [GRADpsi_real, GRADpsi_imag];
+    GRADarr_real = [dxarr_real, dyarr_real, dzarr_real];
+    GRADarr_imag = [dxarr_imag, dyarr_imag, dzarr_imag];
+    GRADpsi = [GRADarr_real, GRADarr_imag];
     return GRADpsi;
 end
 
@@ -45,7 +80,8 @@ end
 
     #grad at vortex
     using LinearAlgebra
-function wps_norm(gradpsi, x, y, z)
+function wps_v(gradpsi, X)
+    x = X[1]; y = X[2]; z = X[3];
     grad_real = gradpsi[1]; grad_imag = gradpsi[2];
     dx_r = grad_real[1]; dy_r = grad_real[2]; dz_r = grad_real[3];
     dx_i = grad_imag[1]; dy_i = grad_imag[2]; dz_i = grad_imag[3];
@@ -54,43 +90,65 @@ function wps_norm(gradpsi, x, y, z)
 
 
     cross_v = cross(grad_v_r,  grad_v_i)
-    wps_v = cross_v
-
-    normalize!(wps_v)
-    return wps_v;
+    wps = cross_v
+    return wps;
 end
 
+function wps_v_2D(gradpsi, X)
+    x = X[1]; y = X[2];
+    grad_real = gradpsi[1]; grad_imag = gradpsi[2];
+    dx_r = grad_real[1]; dy_r = grad_real[2];
+    dx_i = grad_imag[1]; dy_i = grad_imag[2];
+    grad_v_r = [dx_r[x,y], dy_r[x,y], 0];
+    grad_v_i = [dx_i[x,y], dy_i[x,y], 0];
 
+    cross_v = cross(grad_v_r, grad_v_i)
+    wps = cross_v;
+    return wps;
+end
 
+#=
+myarr = rand(128,128,32) + im*rand(128,128,32)
+x = LinRange(-15, 15, 128);
+y = x;
+z = LinRange(-4, 4, 32)
+X = [x, y, z]
+grad = gradient_3D(myarr, X)
+wps = wps_norm(grad, 10, 10, 10)
+norm(wps)
+grad_real = grad[1]; grad_imag = grad[2];
+dx_r = grad_real[1]; dy_r = grad_real[2]; dz_r = grad_real[3];
+dx_i = grad_imag[1]; dy_i = grad_imag[2]; dz_i = grad_imag[3];
 
+=#
 # Older slower way
 #=
 @time for zin in 1:length(z)
     for yin in 1:length(y)
         for xin in 2:length(x)
-            ∇xpsi_real[xin, yin, zin] = (psi_real[xin, yin, zin] - psi_real[xin-1, yin, zin]) / dx;
+            ∇xarr_real[xin, yin, zin] = (arr_real[xin, yin, zin] - arr_real[xin-1, yin, zin]) / dx;
         end 
     end
 end
 #fix boundaries later
-∇xpsi_real[1, :, :] .= 0;
+∇xarr_real[1, :, :] .= 0;
 
 for zin in 1:length(z)
     for xin in 1:length(x)
         for yin in 2:length(y)
-            ∇ypsi_real[xin, yin, zin] = (psi_real[xin, yin, zin] - psi_real[xin, yin-1, zin]) / dy;
+            ∇yarr_real[xin, yin, zin] = (arr_real[xin, yin, zin] - arr_real[xin, yin-1, zin]) / dy;
         end 
     end
 end
-∇ypsi_real[:, 1, :] .= 0;
+∇yarr_real[:, 1, :] .= 0;
 
 for xin in 1:length(x)
     for yin in 1:length(y)
         for zin in 2:length(z)
-            ∇zpsi_real[xin, yin, zin] = (psi_real[xin, yin, zin] - psi_real[xin, yin, zin-1]) / dz;
+            ∇zarr_real[xin, yin, zin] = (arr_real[xin, yin, zin] - arr_real[xin, yin, zin-1]) / dz;
         end 
     end
 end
-∇zpsi_real[:, :, 1] .= 0;
+∇zarr_real[:, :, 1] .= 0;
 
 =#
