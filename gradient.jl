@@ -1,6 +1,7 @@
 #########################################################
-    psi = xspace(sol(tslice), sim)
-    # then use psi = myarr for gradient_3D
+
+# Compute the gradient of 2D array, returns grad = [real, imag]
+
 function gradient_2D(arr, X)
     arr_real = real(arr)
     arr_imag = imag(arr)
@@ -31,6 +32,7 @@ function gradient_2D(arr, X)
     return grad;
 end
 
+# Compute the gradient of 3D array, returns grad = [real, imag]
 
 function gradient_3D(arr, X)
 
@@ -75,11 +77,9 @@ function gradient_3D(arr, X)
     return GRADpsi;
 end
 
-    ###### Lets try take the cross product of these
-    #First lets say there's a vortex at (10, 10, 10)
 
-    #grad at vortex
-    using LinearAlgebra
+# Pseudo-vorticity 3D, needs X = [x, y, z] for the grid and array gradient as parameters.
+# Returns pseudo-vorticity vector 
 function wps_v(gradpsi, X)
     x = X[1]; y = X[2]; z = X[3];
     grad_real = gradpsi[1]; grad_imag = gradpsi[2];
@@ -94,6 +94,8 @@ function wps_v(gradpsi, X)
     return wps;
 end
 
+# Pseudo-vorticity 2D, needs X = [x, y] for the grid and array gradient as parameters.
+# Returns vector orthog to x, y. Good to sanity check as wps = 0 if no nearby vorticies.
 function wps_v_2D(gradpsi, X)
     x = X[1]; y = X[2];
     grad_real = gradpsi[1]; grad_imag = gradpsi[2];
@@ -106,6 +108,23 @@ function wps_v_2D(gradpsi, X)
     wps = cross_v;
     return wps;
 end
+
+# Find closest element to x in array
+function find_nearest(x, arr)
+    nearest = arr[1];
+    nearest_idx = 1;
+    diff = abs(x-nearest);
+
+    for i in 2:length(arr)
+        if abs(x-arr[i]) < diff
+            nearest = arr[i];
+            nearest_idx = i;
+            diff = abs(x-arr[i]);
+        end
+    end
+    return [nearest,  Int(nearest_idx)];
+end
+
 
 #=
 myarr = rand(128,128,32) + im*rand(128,128,32)
@@ -152,3 +171,7 @@ end
 ∇zarr_real[:, :, 1] .= 0;
 
 =#
+
+# Returns [nearest value, index] 
+
+
