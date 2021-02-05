@@ -1,4 +1,3 @@
-
 using FourierGPE
 |
 #--- parameters
@@ -37,38 +36,3 @@ function dense(phi)
     pmax = maximum(density)
     return density/pmax
 end
-
-
-psi = xspace(sol[100], sim)
-find_vortices3D(psi, X)
-vort_arr_mid = vortex_array(findvortices(Torus(psi[:, :, 16], x, y)))
-vort_arr_up = vortex_array(findvortices(Torus(psi[:, :, 17], x, y)))
-grad = gradient_3D(psi, X)
-
-myvort = vort_arr_mid[2,1:2]
-xin = find_nearest(myvort[1], x)[2]; yin = find_nearest(myvort[2], y)[2];
-using LinearAlgebra
-wps = wps_v(grad, [Int(xin), Int(yin), 16])
-wps = wps ./ wps[3]
-newvort = myvort + wps[1:2]
-newvort
-
-#=
-psi = xspace(sol(100), sim);
-
-grad = gradient_3D(psi, X)
-
-zslice = 26;
-v_array = vortex_array(findvortices(Torus(psi[:, :, zslice], x, y)))
-
-wps_arr = similar(real(psi[:, :, zslice]));
-for i in 1:128
-    for j in 1:128
-        wps_arr[i, j] = norm(wps_v(grad, [i, j, zslice]));
-    end
-end
-wps_arr = abs.(wps_arr);
-wps_arr = wps_arr ./ (findmax(wps_arr)[1])
-heatmap(x, y, wps_arr)
-scatter!(v_array[:, 2], v_array[:, 1])
-=#
