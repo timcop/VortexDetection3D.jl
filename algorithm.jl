@@ -1,3 +1,5 @@
+using Interpolations, LinearAlgebra
+
 psi = xspace(psi2, sim);
 zidx = 32;
 vorts_3d = find_vortices3D(psi, X)
