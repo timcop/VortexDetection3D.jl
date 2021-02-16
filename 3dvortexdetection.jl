@@ -27,6 +27,24 @@ function find_vortices3D(psi, X)
         
         vort_array = vortex_array(findvortices(psi));
     end
+    temp = zeros(length(vort_array[:, 1]))
+    vort_array = hcat(vort_array, temp);
+
+
     return vort_array;
 end
+
+function find_vortices3D_v2(psi, X)
+    z = X[3];
+    vorts_3d = Array{Float64, 2}[]
+
+    for zidx in 1:length(z)
+        vorts = vortex_array(findvortices(Torus(psi[:, :, zidx], x, y)));
+        temp = zeros(length(vorts[:, 1]))
+        vorts = hcat(vorts, temp);
+        push!(vorts_3d, vorts);
+    end
+    return vorts_3d;
+end
+        
 

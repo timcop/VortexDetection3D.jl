@@ -196,8 +196,8 @@ function gradient_3D_cent(arr, X)
     dzarr_i[:, :, end] .= (arr_i[:, :, 1] .- arr_i[:, :, end-1])./ (2*dz);
 
     for i in 2:length(z)-1
-        dzarr_r .= (arr_r[:, :, i+1] - arr_r[:, :, i-1]) ./ (dz*2);
-        dzarr_i .= (arr_i[:, :, i+1] - arr_i[:, :, i-1]) ./ (dz*2);
+        dzarr_r[:, :, i] .= (arr_r[:, :, i+1] - arr_r[:, :, i-1]) ./ (dz*2);
+        dzarr_i[:, :, i] .= (arr_i[:, :, i+1] - arr_i[:, :, i-1]) ./ (dz*2);
     end
     
     grad_r = [dxarr_r, dyarr_r, dzarr_r];
@@ -279,3 +279,22 @@ function vortices_plot(psi, x, y, zidx)
     =#
 
 end
+
+function find_closest_tuple(arr, X)
+    x = X[1]; y = X[2];
+    closest_dist = 1000;
+    index = 0;
+    for i in 1:length(arr[:, 1])
+        dist = (x - arr[i, 1])^2 + (y - arr[i, 2])^2;
+        dist = sqrt(dist);
+        if dist < closest_dist
+            index = i;
+            closest_dist = dist;
+        end
+    end
+
+    return index;
+end
+
+
+
