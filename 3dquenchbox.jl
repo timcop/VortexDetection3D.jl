@@ -4,23 +4,23 @@ gr(titlefontsize=12,size=(500,300),colorbar=false);
 using FourierGPE
 
 ##Set simulation parameters
-    L=(16.,16.,16.)
-    N=(64,64,64)
-    sim = Sim(L,N)
+    L=(16.,16.,16.);
+    N=(64,64,64);
+    sim = Sim(L,N);
     @unpack_Sim sim;
 
 ## Initialse sim
     # parameters
-    μ = 25.0
-    γ = 0.05
-    tf = 4/γ
-    Nt = 200
+    μ = 25.0;
+    γ = 0.05;
+    tf = 4/γ;
+    Nt = 200;
     t = LinRange(0.,tf,Nt);
 
 ## Run sim
-    x,y,z = X
-    ψi = randn(N)+im*randn(N)
-    ϕi = kspace(ψi,sim)
+    x,y,z = X;
+    ψi = randn(N)+im*randn(N);
+    ϕi = kspace(ψi,sim);
 
     @pack_Sim! sim;
 
@@ -31,8 +31,8 @@ using FourierGPE
 ## Density Isosurface
     using Makie, AbstractPlotting
 
-    function dense(i)
-        ψm = xspace(sol[i],sim)
+    function dense(psi)
+        ψm = xspace(psi,sim)
         density = abs2.(ψm)
         pmax = maximum(density)
         return density/pmax
@@ -62,11 +62,15 @@ using JLD2
     psi_ring1 = sol[91]
     psi_ring2 = sol[105]
     psi_ring3 = sol[110]
+    psi_box_25 = sol(25)
+    psi_tubes = sol(35)
 
     @save "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
+    @save "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
 
     ## load test data
     @load "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
+    @load "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
 
 
 

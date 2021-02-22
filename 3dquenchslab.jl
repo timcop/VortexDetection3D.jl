@@ -29,6 +29,12 @@ using JLD2, FileIO
 
 ## Evolve in k space
     @time sol = runsim(sim); # will take a few minutes to run.
+    psi1 = sol[50]
+    psi2 = sol[55]
+    psi3 = sol[60]
+
+    @save "3dquenchslab_data.jld2" psi1 psi2 psi3
+
 
 
 function dense(phi)
@@ -38,13 +44,8 @@ function dense(phi)
     return density/pmax
 end
 
-using JLD2 
 
-psi1 = sol[50]
-psi2 = sol[55]
-psi3 = sol[60]
 
-@save "3dquenchslab_data.jld2" psi1 psi2 psi3
 
 ## load test data
 @load "3dquenchslab_data.jld2" psi1 psi2 psi3

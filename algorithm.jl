@@ -1,7 +1,6 @@
 using Interpolations, LinearAlgebra
 
-psi = xspace(psi2, sim);
-zidx = 32;
+psi = xspace(psi_ring1, sim);
 grad = gradient_3D_cent(psi, X);
 grad_i = grad_itp(grad, X);
 dz = z[2]-z[1];
@@ -9,6 +8,8 @@ dz = z[2]-z[1];
 label = 1;
 
 vorts_3d = find_vortices3D_v2(psi, X);
+
+
 
 for i in 1:length(vorts_3d[1][:, 1])
     if vorts_3d[1][i, 3] > 0
@@ -24,7 +25,6 @@ for i in 1:length(vorts_3d[32][:, 1])
     end
 end
 
-vorts_3d[32]
 for zidx in 1:length(z)-1
     vorts = vorts_3d[zidx] 
     vorts_up = vorts_3d[zidx + 1]
@@ -64,13 +64,6 @@ end
 
 ## FINAL VALUE OF LABEL - 1 IS NUMBER OF VORTICES
 vorts_label = Array{Float64, 2}[];
-for i in 1:length(z)
-    temp = z[i]*ones(length(vorts_3d[i][:, 1]));
-    vorts_3d[i] = hcat(vorts_3d[i], temp);
-    vorts_3d[i] = view(vorts_3d[i], :, [1, 2, 5, 3, 4])
-end
-vorts_3d[32]
-
 for i in 1:label-1
     current_vort = [1000 0 0 0 0];
 
@@ -89,5 +82,9 @@ for i in 1:label-1
     end
     push!(vorts_label, current_vort)
 end
-   
-vorts_label[29]
+label-1
+vorts_label[9]
+vorts_3d[16]
+using Makie, AbstractPlotting
+
+volume(dense(psi_tubes), algorithm = :iso, show_axis = true)
