@@ -62,15 +62,18 @@ using JLD2
     psi_ring1 = sol[91]
     psi_ring2 = sol[105]
     psi_ring3 = sol[110]
+    psi_ring4 = sol[65]
     psi_box_25 = sol(25)
     psi_tubes = sol(35)
 
     @save "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
     @save "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
+    @save "3dquenchbox_data3.jld2" psi_ring4
 
     ## load test data
     @load "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
     @load "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
+    @load "3dquenchbox_data3.jld2" psi_ring4
 
 
 

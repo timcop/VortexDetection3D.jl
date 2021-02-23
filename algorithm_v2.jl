@@ -1,6 +1,6 @@
 using Interpolations, LinearAlgebra
 
-psi = xspace(psi_ring2, sim);
+psi = xspace(psi_ring4, sim);
 grad = gradient_3D_cent(psi, X);
 grad_i = grad_itp(grad, X);
 dz = z[2]-z[1];
@@ -67,7 +67,9 @@ for i in 1:label-1
     end
     push!(vorts_label, current_vort)
 end
-vorts_label[2]
+vorts_label[10]
+NUM_VORTS = length(vorts_label)
+
 
 # For each v in vorts_label[i]
 # If v[1, 3] != z[1] then vort not attached to bottom slice
@@ -164,28 +166,50 @@ function vortex_link_top(vidx, vorts_label)
     end
 end
 
-
-for i in 1:length(vorts_label)
-    v = vorts_label[i]
-    if !vortex_boundary_bottom(v, dx, dy, dz)
-        vortex_link_bottom(i, vorts_label)
+function sort_vorts_label(vorts_label)
+    
+    temp = Array{Float64, 2}[]
+    i = 1;
+    for i in 1:length(vorts_label)
+        for j in 1:NUM_VORTS
+        
+            if (vorts_label[i][1, 5] == j)
+               #println(j)
+                push!(temp, vorts_label[i]);
+            end
+        end
     end
-    if !vortex_boundary_top(v, dx, dy, dz)
-        vortex_link_top(i, vorts_label)
-    end
-
-    # Pop all v in vorts_label with same label as v
+    return temp;
 end
 
 
+
+vort_linked = Array{Float64, 2}[];
+while (length(vorts_label) > 0)
     
-vorts_label[2]
+    v = vorts_label[1]
+    if !vortex_boundary_bottom(v, dx, dy, dz)
+        vortex_link_bottom(1, vorts_label)
+    end
+    if !vortex_boundary_top(v, dx, dy, dz)
+        vortex_link_top(1, vorts_label)
+    end
 
 
+    vorts_label = sort_vorts_label(vorts_label);
+    reverse!(vorts_label);
+    label = vorts_label[end][1, 5];
+    while ((length(vorts_label) > 0) && (vorts_label[end][1, 5] == label))
+        pop = pop!(vorts_label);
+        push!(vort_linked, pop);
+    end
+    reverse!(vorts_label)
+    println(length(vorts_label))
+    # Pop all v in vorts_label with same label as v
+end
 
-
-
-
+vorts_label
+vort_linked[6]
 
 
 
@@ -195,6 +219,6 @@ vorts_label[2]
 
 
 using Makie, AbstractPlotting
-volume(dense(psi_ring2), algorithm = :iso, show_axis = true)
+volume(dense(psi_ring4), algorithm = :iso, show_axis = true)
 
 
