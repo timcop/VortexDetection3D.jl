@@ -44,7 +44,23 @@ function josh_matrices(n, unique)
                     sub_bool = true;
                     break;
                 end
+                sub = A[1:2, 1:2:3]
+                if (det(sub) != 0 && det(sub) != 1 && det(sub)!= -1)
+                    sub_bool = true;
+                    break;
+                end
+                sub = A[1:2:3, 1:2:3]
+                if (det(sub) != 0 && det(sub) != 1 && det(sub)!= -1)
+                    sub_bool = true;
+                    break;
+                end
+                sub = A[2:3, 1:2:3]
+                if (det(sub) != 0 && det(sub) != 1 && det(sub)!= -1)
+                    sub_bool = true;
+                    break;
+                end
             end
+            
             
             
             if sub_bool == false
@@ -112,3 +128,4 @@ a1 == -a2
 C = collect.(Iterators.product(ntuple(_ -> -1:1, 2)...))[:]
 A_perms = collect(multiset_combinations(C, 2))
 A = [1 0 1; 0 1 1; 1 1 0]
+A[1:2:3, 1:2:3]
