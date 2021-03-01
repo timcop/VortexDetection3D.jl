@@ -25,7 +25,7 @@ using FourierGPE
     @pack_Sim! sim;
 
 ## Evolve in k-space
-    sol = runsim(sim); # will take a few minutes to run.
+    #sol = runsim(sim); # will take a few minutes to run.
 
 
 ## Density Isosurface
@@ -51,14 +51,15 @@ using FourierGPE
 
 
 ## Plot density film
-    densityfilm(Nt)
+    #densityfilm(Nt)
 
 ## Plot time slice of density film
-    volume(dense(105), algorithm = :iso, show_axis = true)
+    #volume(dense(105), algorithm = :iso, show_axis = true)
 
 using JLD2 
 
-## Some solutions with rings
+## Some solutions with rings 
+   #=
     psi_ring1 = sol[91]
     psi_ring2 = sol[105]
     psi_ring3 = sol[110]
@@ -69,15 +70,17 @@ using JLD2
     @save "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
     @save "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
     @save "3dquenchbox_data3.jld2" psi_ring4
+    =#
 
-    ## load test data
+## Load test data
     @load "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
     @load "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
     @load "3dquenchbox_data3.jld2" psi_ring4
-
+    
 
 
 ## Testing area
+    #=
     using Interpolations, LinearAlgebra
     psi = xspace(psi_ring3, sim);
     grad = gradient_3D_cent(psi, X);
@@ -94,7 +97,7 @@ using JLD2
     wps = wps .* (dz/abs(wps[3]))
 
     diff
-
+    =#
 
     
 

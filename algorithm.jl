@@ -1,6 +1,6 @@
 using Interpolations, LinearAlgebra
 
-psi = xspace(psi_ring1, sim);
+psi = xspace(psi1, sim);
 grad = gradient_3D_cent(psi, X);
 grad_i = grad_itp(grad, X);
 dz = z[2]-z[1];

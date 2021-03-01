@@ -22,8 +22,8 @@ using JLD2, FileIO
 
 ## random initial state
     x,y,z = X
-    ψi = randn(N)+im*randn(N)
-    ϕi = kspace(ψi,sim)
+    ψi = randn(N)+im*randn(N);
+    ϕi = kspace(ψi,sim);
 
     @pack_Sim! sim;
 

@@ -1,6 +1,7 @@
 [deps]
 AbstractPlotting = "537997a7-5e4e-5d89-9595-2241ea00577e"
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 CoupledFields = "7ad07ef1-bdf2-5661-9d2b-286fd4296dac"
 FGPEexamples = "6c09c9bc-5f11-11e9-20cd-4713a023ac65"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"

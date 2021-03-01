@@ -1,19 +1,19 @@
 using Interpolations, LinearAlgebra
 
-psi = xspace(psi_ring4, sim);
+psi = xspace(psi1, sim);
 grad = gradient_3D_cent(psi, X);
 grad_i = grad_itp(grad, X);
 dz = z[2]-z[1];
-
-
 
 vorts_3d = find_vortices3D_v2(psi, X);
 
 # Find first zslice containing vortices
 # Vort = [x y z charge label]
 
+
+length(z)
 label = 1;
-for zidx in 1:length(z)
+for zidx in 2:length(z)-2
     vorts_slice = vorts_3d[zidx];
     num_vorts = length(vorts_slice) # Number of vorts on z-slice
     if num_vorts != 0
@@ -67,9 +67,9 @@ for i in 1:label-1
     end
     push!(vorts_label, current_vort)
 end
-vorts_label[10]
-NUM_VORTS = length(vorts_label)
 
+NUM_VORTS = length(vorts_label)
+vorts_label[3]
 
 # For each v in vorts_label[i]
 # If v[1, 3] != z[1] then vort not attached to bottom slice
@@ -120,12 +120,12 @@ function vortex_link_bottom(vidx, vorts_label)
             if index != 0
                 # If z level is at bottom of vi 
                 if vi[index, 3] == vi[1, 3]
-                    vorts_label[vidx][:, 5] .= vi[1, 5];
+                    vorts_label[i][:, 5] .= vorts_label[vidx][1, 5]
                     if !vortex_boundary_top(vi, dx, dy, dz)
                         vortex_link_top(i, vorts_label);
                     end
                 elseif vi[index, 3] == vi[end, 3]
-                    vorts_label[vidx][:, 5] .= vi[1, 5];
+                    vorts_label[i][:, 5] .= vorts_label[vidx][1, 5]
                     if !vortex_boundary_bottom(vi, dx, dy, dz)
                         vortex_link_bottom(i, vorts_label);
                     end
@@ -151,12 +151,13 @@ function vortex_link_top(vidx, vorts_label)
             if index != 0
                 # If z level is at bottom of vi 
                 if vi[index, 3] == vi[1, 3]
-                    vorts_label[vidx][:, 5] .= vi[1, 5];
+                    vorts_label[i][:, 5] .= vorts_label[vidx][1, 5]
                     if !vortex_boundary_top(vi, dx, dy, dz)
                         vortex_link_top(i, vorts_label);
                     end
                 elseif vi[index, 3] == vi[end, 3]
-                    vorts_label[vidx][:, 5] .= vi[1, 5];
+                    vorts_label[i][:, 5] .= vorts_label[vidx][1, 5]
+
                     if !vortex_boundary_bottom(vi, dx, dy, dz)
                         vortex_link_bottom(i, vorts_label);
                     end
@@ -208,17 +209,15 @@ while (length(vorts_label) > 0)
     # Pop all v in vorts_label with same label as v
 end
 
-vorts_label
-vort_linked[6]
+length(vort_linked)
+vort_linked[1]
 
 
 
 
 
 
-
-
+#
 using Makie, AbstractPlotting
-volume(dense(psi_ring4), algorithm = :iso, show_axis = true)
-
+volume(dense(psi1), algorithm = :iso, show_axis = true)
 
