@@ -35,9 +35,9 @@ function find_vortices3D(psi, X)
 end
 
 function find_vortices3D_v2(psi, X)
+    x = X[1]; y = X[2];
     z = X[3];
     vorts_3d = Array{Float64, 2}[]
-
     for zidx in 1:length(z)
         vorts = vortex_array(findvortices(Torus(psi[:, :, zidx], x, y)));
         if (length(vorts) == 0)
@@ -54,9 +54,10 @@ function find_vortices3D_v2(psi, X)
     return vorts_3d;
 end
         
-
+# Need to pass X and define x = X[1] etc
 function vortex_boundary_bottom(v, dx, dy, dz)
     at_boundary = true;
+
     if ((v[1, 1] - x[1] > dx) && (x[end] - v[1, 1] > dx)) # Then not at x Boundary
         if ((v[1, 2] - y[1] > dy) && (y[end] - v[1, 2] > dy)) # " y boundary 
             if ((v[1, 3] - z[1] > dz) && (z[end] - v[1, 3] > dz))

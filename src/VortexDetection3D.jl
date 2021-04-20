@@ -28,7 +28,7 @@ vortex_link_bottom, vortex_link_top, sort_vorts_label,
 find_vortices3D, find_vortices3D_v2, 
 
 # psi Interpolations
-psi_itp_2D, 
+psi_itp_2D
 
 include("utils.jl")
 include("detection_functions.jl")
@@ -37,5 +37,6 @@ include("detection_functions.jl")
 @load joinpath(@__DIR__,"3dquenchbox_data.jld2") psi_ring1 psi_ring2 psi_ring3
 @load joinpath(@__DIR__,"3dquenchbox_data2.jld2") psi_box_25 psi_tubes
 @load joinpath(@__DIR__,"3dquenchbox_data3.jld2") psi_ring4
+
 
 end

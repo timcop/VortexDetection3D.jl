@@ -1,6 +1,6 @@
 using Interpolations, LinearAlgebra
 
-psi = xspace(psi1, sim);
+psi = xspace(VortexDetection3D.psi_ring3, sim);
 grad = gradient_3D_cent(psi, X);
 grad_i = grad_itp(grad, X);
 dz = z[2]-z[1];
@@ -45,6 +45,7 @@ for zidx in 2:length(z)-2
         end
     end
 end
+
 vorts_label = Array{Float64, 2}[];
 for i in 1:label-1
     current_vort = [1000 0 0 0 0];
@@ -69,7 +70,7 @@ for i in 1:label-1
 end
 
 NUM_VORTS = length(vorts_label)
-vorts_label[3]
+vorts_label[1]
 
 # For each v in vorts_label[i]
 # If v[1, 3] != z[1] then vort not attached to bottom slice
@@ -219,5 +220,5 @@ vort_linked[1]
 
 #
 using Makie, AbstractPlotting
-volume(dense(psi1), algorithm = :iso, show_axis = true)
+volume(dense(VortexDetection3D.psi_ring3), algorithm = :iso, show_axis = true)
 
