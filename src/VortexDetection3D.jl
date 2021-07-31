@@ -7,7 +7,6 @@ using LaTeXStrings
 using JLD2
 using FileIO
 using Makie
-using AbstractPlotting
 using LinearAlgebra
 using Interpolations
 
@@ -38,5 +37,9 @@ include("detection_functions.jl")
 @load joinpath(@__DIR__,"3dquenchbox_data2.jld2") psi_box_25 psi_tubes
 @load joinpath(@__DIR__,"3dquenchbox_data3.jld2") psi_ring4
 
+export psi1, psi2, psi3,
+psi_ring1, psi_ring2, psi_ring3,
+psi_box_25, psi_tubes,
+psi_ring4
 
 end

@@ -219,6 +219,6 @@ vort_linked[1]
 
 
 #
-using Makie, AbstractPlotting
+using Makie
 volume(dense(VortexDetection3D.psi_ring3), algorithm = :iso, show_axis = true)
 

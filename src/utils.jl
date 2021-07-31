@@ -296,7 +296,7 @@ function find_closest_tuple(arr, X)
     return index;
 end
 
-function dense(psi)
+function dense(psi, sim)
     ψm = xspace(psi,sim)
     density = abs2.(ψm)
     pmax = maximum(density)

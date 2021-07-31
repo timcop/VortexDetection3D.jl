@@ -85,6 +85,6 @@ end
 label-1
 vorts_label[9]
 vorts_3d[16]
-using Makie, AbstractPlotting
+using Makie
 
 volume(dense(psi_tubes), algorithm = :iso, show_axis = true)

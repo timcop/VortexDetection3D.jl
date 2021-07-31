@@ -29,9 +29,9 @@ using FourierGPE
 
 
 ## Density Isosurface
-    using Makie, AbstractPlotting
+    using Makie
 
-    function dense(psi)
+    function dense(psi, sim)
         ψm = xspace(psi,sim)
         density = abs2.(ψm)
         pmax = maximum(density)
@@ -54,7 +54,7 @@ using FourierGPE
     #densityfilm(Nt)
 
 ## Plot time slice of density film
-    #volume(dense(105), algorithm = :iso, show_axis = true)
+    Makie.volume(dense(psi_ring1, sim), algorithm = :iso, show_axis=true)
 
 using JLD2 
 
@@ -73,9 +73,9 @@ using JLD2
     =#
 
 ## Load test data
-    @load "3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
-    @load "3dquenchbox_data2.jld2" psi_box_25 psi_tubes
-    @load "3dquenchbox_data3.jld2" psi_ring4
+    @load "src/3dquenchbox_data.jld2" psi_ring1 psi_ring2 psi_ring3
+    @load "src/3dquenchbox_data2.jld2" psi_box_25 psi_tubes
+    @load "src/3dquenchbox_data3.jld2" psi_ring4
     
 
 
