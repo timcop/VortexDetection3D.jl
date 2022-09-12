@@ -10,11 +10,3 @@ lcov.info
 lcov.info
 *.bson
 *.jld2
-data/3dquenchbox_data.jld2
-data/3dquenchbox_data2.jld2
-data/3dquenchbox_data3.jld2
-data/3dquenchslab_data.jld2
-data/benchSuite10vort360sec.jld2
-data/box_rings.jld2
-data/naiveBenchmarks.jld2
-data/slab_tubes.jld2
