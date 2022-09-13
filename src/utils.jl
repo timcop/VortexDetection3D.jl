@@ -12,15 +12,15 @@ function plot_iso(psi, X, visible=true, heal_2=false)
     # resize!(screen, 2998, 1920)
 end
 
+function vorts3DMatrix(vorts)
+    vorts = vcat(vorts'...)
+end
+
 function scatterVortsOnIso(vorts, markersize=200)
     vorts = vorts3DMatrix(vorts);
     
     scatter!(vorts[:, 1], vorts[:, 2], vorts[:, 3], color="red", markersize=markersize)
 end
-
-# function vorts3DMatrix(vorts)
-#     vorts = vcat(vorts'...)
-# end
 
 function scatterClassifiedVortices(vortSets, vorts_3d, X, size, edges=false)
     colors = distinguishable_colors(length(vortSets),[RGB(0,0.35,0.25)],dropseed=true)
@@ -88,4 +88,14 @@ function periodicPlotting(vorts_sorted, X)
         catch
         end
     end
+end
+
+function euclid(v1, v2)
+    @assert length(v1) == length(v2)
+    sum = 0
+    for i in 1:length(v1)
+        sum += (v1[i]-v2[i])^2
+    end
+    sum = sqrt(sum)
+    return sum
 end

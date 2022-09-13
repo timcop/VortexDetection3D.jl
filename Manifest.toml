@@ -1814,8 +1814,8 @@ uuid = "19fa3120-7c27-5ec5-8db8-b0b0aa330d6f"
 version = "0.2.0"
 
 [[deps.VortexDistributions]]
-deps = ["Colors", "Coverage", "Distances", "FFTW", "FileIO", "Interpolations", "JLD2", "LightGraphs", "LinearAlgebra", "NearestNeighbors", "Parameters", "ProgressMeter", "ScikitLearn", "SimpleWeightedGraphs", "SparseArrays", "SpecialFunctions", "ToeplitzMatrices", "UnPack"]
-git-tree-sha1 = "e9d027ab79b6f45ca4211ff784a7b3caf4c4ffb8"
+deps = ["Coverage", "Distances", "FFTW", "FileIO", "Interpolations", "JLD2", "LightGraphs", "LinearAlgebra", "NearestNeighbors", "Parameters", "ProgressMeter", "ScikitLearn", "SimpleWeightedGraphs", "SparseArrays", "SpecialFunctions", "ToeplitzMatrices", "UnPack"]
+git-tree-sha1 = "77ff60a162aea063264f6e9fc6c7d3577b14289d"
 repo-rev = "file_structure"
 repo-url = "https://github.com/timcop/VortexDistributions.jl.git"
 uuid = "b688e990-d167-11e8-1f13-43a2532b2fa8"
