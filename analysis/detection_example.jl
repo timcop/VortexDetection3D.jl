@@ -2,8 +2,7 @@ using VortexDistributions
 using FourierGPE
 using JLD2
 
-
-
+include("../src/utils.jl")
 ## Sim params
 
 L=(16.,16.,16.);
