@@ -31,18 +31,18 @@ markersize = 400
 
 
 # This finds all vortex points intersecting the planes in 3 directions
-@time vorts_3d = findvortices3D_itp(psi, X, N) 
+@time vorts_3d = find_vortex_points_3d(psi, X, N) 
 plot_iso(psi, X, true, true)
 scatterVortsOnIso(vorts_3d, 10)
 
 
 # This creates an array of sets of connected vortices unordered
-@time vorts_class = setMethodPeriodic(vorts_3d, X, 0., N, true)
+@time vorts_class = connect_vortex_points_3d(vorts_3d, X, 0., N, true)
 plot_iso(psi, X, true, true)
 scatterClassifiedVortices(vorts_class, vorts_3d, X, markersize)
 
 # This orders the vortices
-@time v_sort = sort_classified_vorts4(vorts_class, vorts_3d, X); 
+@time v_sort = sort_classified_vorts_3d(vorts_class, vorts_3d, X); 
 plot_iso(psi, X, true, true)
 periodicPlotting(v_sort, X)
 
