@@ -5,18 +5,18 @@ using JLD2
 include("../src/utils.jl")
 ## Sim params
 
-L=(16.,16.,16.);
-N=(64,64,64);
-sim = Sim(L,N);
-@unpack_Sim sim;
+# L=(16.,16.,16.);
+# N=(64,64,64);
+# sim = Sim(L,N);
+# @unpack_Sim sim;
 
-μ = 25.0;
-γ = 0.05;
-tf = 4/γ;
-Nt = 200;
-t = LinRange(0.,tf,Nt);
+# μ = 25.0;
+# γ = 0.05;
+# tf = 4/γ;
+# Nt = 200;
+# t = LinRange(0.,tf,Nt);
 
-x,y,z = X;
+# x,y,z = X;
 
 data = joinpath(@__DIR__, "../data/box_vorts.jld2")
 
@@ -38,6 +38,8 @@ scatterVortsOnIso(vorts_3d, 10)
 
 # This creates an array of sets of connected vortices unordered
 @time vorts_class = connect_vortex_points_3d(vorts_3d, X, 0., N, true)
+markersize = 5
+
 plot_iso(psi, X, true, true)
 scatterClassifiedVortices(vorts_class, vorts_3d, X, markersize)
 
