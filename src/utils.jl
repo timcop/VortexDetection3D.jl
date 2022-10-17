@@ -1,12 +1,21 @@
 using VortexDistributions, GLMakie, Colors
+
+using ColorSchemes
+
 function plot_iso(psi, X, visible=true, heal_2=false)
     density = abs2.(psi)
     pmax = maximum(density)
     density = density/pmax
+
+    cbarPal= :plasma
+    cmap = get(colorschemes[cbarPal], LinRange(0,1,100))
+    cmap2 = [(cmap[i], 0.5) for i in 1:100]
+
+
     if heal_2
-        scene = volume(X[1], X[2], X[3], density, algorithm = :iso, visible=visible, isovalue=0.65,isorange=0.075)
+        scene = volume(X[1], X[2], X[3], density, algorithm = :iso, visible=visible, isovalue=0.65,isorange=0.075, colormap=cmap2, transparency=true)
     else
-        scene = volume(X[1], X[2], X[3], density, algorithm = :iso, visible=visible)
+        scene = volume(X[1], X[2], X[3], density, algorithm = :iso, visible=visible, colormap=cmap2, transparency=true)
     end
     screen = display(scene)
     # resize!(screen, 2998, 1920)
@@ -16,14 +25,14 @@ function vorts3DMatrix(vorts)
     vorts = vcat(vorts'...)
 end
 
-function scatterVortsOnIso(vorts, markersize=200)
+function scatterVortsOnIso(vorts)
     vorts = vorts3DMatrix(vorts);
     
-    scatter!(vorts[:, 1], vorts[:, 2], vorts[:, 3], color="red", markersize=markersize)
+    meshscatter!(vorts[:, 1], vorts[:, 2], vorts[:, 3], color="blue")
 end
 
 function scatterClassifiedVortices(vortSets, vorts_3d, X, size, edges=false)
-    colors = distinguishable_colors(length(vortSets),[RGB(0,0.35,0.25)],dropseed=true)
+    colors = distinguishable_colors(length(vortSets),[RGB(0.8103465454545455,0.2951044545454546,0.4575856363636363)],dropseed=true)
     v_matrix = vcat(vorts_3d'...)[:,1:3]'
 
     for i in 1:length(vortSets)
@@ -31,7 +40,7 @@ function scatterClassifiedVortices(vortSets, vorts_3d, X, size, edges=false)
         if !edges
             vi = vi[:, [vortInBounds(vi[:, i], X) for i = 1:length(vi[1, :])]] # Filters vortices that aren't on the grid
         end
-        scatter!(vi[1,:],vi[2,:],vi[3,:],markersize=size,color=colors[i])
+        meshscatter!(vi[1,:],vi[2,:],vi[3,:],color=colors[i])
     end
 end
 
@@ -55,7 +64,7 @@ function plot_line(vort_sort, color, linewidth)
     lines!(vx, vy, vz, linewidth = linewidth, color = color)
 end
 
-function periodicPlotting(vorts_sorted, X)
+function periodicPlotting(vorts_sorted, X, linewidth=5)
     x = X[1]; dx = x[2]-x[1];
 
     vorts_plotting = []
@@ -78,12 +87,12 @@ function periodicPlotting(vorts_sorted, X)
         push!(vorts_plotting, vort_current)
     end
     
-    colors = distinguishable_colors(length(vorts_plotting),[RGB(0,0.35,0.25)],dropseed=true);
+    colors = distinguishable_colors(length(vorts_plotting),[RGB(0.8103465454545455,0.2951044545454546,0.4575856363636363)],dropseed=true);
     for i in 1:length(vorts_plotting)
         vi = vorts_plotting[i]
         try
             for j in 1:length(vi)
-                plot_line(vi[j], colors[i], 5)
+                plot_line(vi[j], colors[i], linewidth)
             end
         catch
         end
